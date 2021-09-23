@@ -44,6 +44,25 @@ class DemoApplicationTests {
 			count = 100;
 		}
 
+		var response = sendUserListRequest(request);
+
+		println("code: ${response.header.code}");
+		println("messge: ${response.header.message}");
+		println("lastIndex: ${response.lastIndex}");
+
+		response.users.forEach {
+			println("username:${it.name}} ====================")
+			it.cars.forEachIndexed() { index, car ->
+				println("    car $index = ${car.brand}")
+			}
+			println("    ====================")
+			it.taggedCars.forEach { (key, car) ->
+				println("    $key = ${car.brand}")
+			}
+		}
+	}
+
+	fun sendUserListRequest(request:TTUserListRequestWrapper) : TTUserListResponseWrapper {
 		var urlConnection = URL("http://localhost:8080/xservice").openConnection() as HttpURLConnection;
 		urlConnection.doInput = true;
 		urlConnection.doOutput = true;
@@ -56,25 +75,6 @@ class DemoApplicationTests {
 		println("bytesout.size:${byteout.size},${String(byteout)}")
 		var outb = XDataParser().parse(byteout);
 		var response = TTUserListResponseWrapper(outb);
-
-		println("code: ${response.header.code}");
-		println("messge: ${response.header.message}");
-
-		println("lastIndex: ${response.lastIndex}");
-
-		response.users.forEach {
-			println("username:${it.name}} ====================")
-			it.cars.forEachIndexed() {index, car ->
-				println("    car $index = ${car.brand}")
-			}
-			println("    ====================")
-			it.taggedCars.forEach { (key, car) ->
-				println("    $key = ${car.brand}")
-			}
-		}
-
-
-
+		return response;
 	}
-
 }
