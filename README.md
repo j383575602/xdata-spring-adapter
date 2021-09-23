@@ -1,11 +1,11 @@
 
 # 1 usage:
-   XData and all other artifacts are release to maven central repository, you can use like:
+   XData and all other artifacts are already released to maven central repository, you can use like:
 
 ## 1.1 dependency declaration:
 
-        implementation("top.xcore:xdata-core:1.0.1)
-        implementation("top.xcore:springboot.adapter:0.0.1)
+        implementation("top.xcore:xdata-core:1.0.1")
+        implementation("top.xcore:springboot.adapter:0.0.1")
 
 ## 1.2 you should add Configuration for SpringBoot
 
