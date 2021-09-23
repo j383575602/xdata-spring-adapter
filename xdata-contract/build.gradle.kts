@@ -14,7 +14,8 @@ dependencies {
     implementation(kotlin("stdlib"))
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
-    implementation(fileTree("./../libs"))
+    //implementation(fileTree("./../libs"))
+    implementation("top.xcore","xdata-core","1.0.1")
 }
 
 tasks.getByName<Test>("test") {

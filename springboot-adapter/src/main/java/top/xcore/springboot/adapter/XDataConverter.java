@@ -14,7 +14,13 @@ import top.xcore.xdata.XDataWriter;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
+/**
+ * A converter use to convert xdata to wrapper
+ */
 public class XDataConverter extends AbstractHttpMessageConverter<XData> {
+    /**
+     * Constructor
+     */
     public XDataConverter() {
         super(MediaType.valueOf("application/xdata"));
     }
