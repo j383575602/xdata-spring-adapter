@@ -102,8 +102,6 @@ publishing {
                     }
 
                 }
-
-
         }
     }
 
@@ -117,7 +115,6 @@ publishing {
                 password = project.properties["ossrhPassword"] as String
             }
         }
-
     }
 }
 
