@@ -38,8 +38,8 @@ class DemoApplicationTests {
 
 	@Test
 	fun test3() {
-		doWithXData();
 		doWithFastJson();
+		doWithXData();
 	}
 
 	fun doWithXData() {
