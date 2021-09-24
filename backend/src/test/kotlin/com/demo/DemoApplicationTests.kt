@@ -55,9 +55,9 @@ class DemoApplicationTests {
 		}
 
 		var response = sendUserListRequestXData(request);
+		printResponseWrapper(response);
 		var t1 = System.currentTimeMillis();
 		println("xdata total Time:${t1-t0}")
-		//printResponseWrapper(response);
 	}
 
 
@@ -74,38 +74,41 @@ class DemoApplicationTests {
 		}
 
 		var response = sendUserListRequestJSON(request);
+		printResponse(response);
 		var t1 = System.currentTimeMillis();
 		println("fastjson total Time:${t1-t0}")
 
 
-		//printResponse(response);
 	}
 
 	fun printResponseWrapper(response: TTUserListResponseWrapper) {
+		logValue("code: ${response.header.code}");
+		logValue("messge: ${response.header.message}");
+		logValue("lastIndex: ${response.lastIndex}");
 		response.users.forEach {
-			println("username:${it.name}} ====================")
+			logValue("username:${it.name}} ====================")
 			it.cars.forEachIndexed() { index, car ->
-				println("    car $index = ${car.brand}")
+				logValue("    car $index = ${car.brand}")
 			}
-			println("    ====================")
+			logValue("    ====================")
 			it.taggedCars.forEach { (key, car) ->
-				println("    $key = ${car.brand}")
+				logValue("    $key = ${car.brand}")
 			}
 		}
 	}
 
 	fun printResponse(response: TTUserListResponse) {
-		println("code: ${response.header.code}");
-		println("messge: ${response.header.message}");
-		println("lastIndex: ${response.lastIndex}");
+		logValue("code: ${response.header.code}");
+		logValue("messge: ${response.header.message}");
+		logValue("lastIndex: ${response.lastIndex}");
 		response.users.forEach {
-			println("username:${it.name}} ====================")
+			logValue("username:${it.name}} ====================")
 			it.cars.forEachIndexed() { index, car ->
-				println("    car $index = ${car.brand}")
+				logValue("    car $index = ${car.brand}")
 			}
-			println("    ====================")
+			logValue("    ====================")
 			it.taggedCars.forEach { (key, car) ->
-				println("    $key = ${car.brand}")
+				logValue("    $key = ${car.brand}")
 			}
 		}
 	}
@@ -140,5 +143,9 @@ class DemoApplicationTests {
 		println("bytesout.size:${byteout.size},${String(byteout)}")
 		var response =JSON.parseObject(String(byteout),TTUserListResponse::class.java)
 		return response;
+	}
+
+	fun logValue(msg:Any) {
+		//println(msg);
 	}
 }
