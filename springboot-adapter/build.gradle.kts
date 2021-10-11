@@ -82,7 +82,7 @@ publishing {
                     url.set("https://www.xcore.top")
                     groupId = "top.xcore"
                     artifactId = "springboot.adapter"
-                    version = "0.0.1"
+                    version = project.version.toString()
                     packaging = "jar"
                     description.set("An adapter to integrate xdata with SpringBoot")
                     scm {
