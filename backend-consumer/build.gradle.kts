@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.net.URI
 
 plugins {
     id("org.springframework.boot")
@@ -12,6 +13,9 @@ version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_16
 
 repositories {
+    maven {
+        url = URI("https://maven.aliyun.com/repository/central")
+    }
     mavenCentral()
     mavenLocal()
 }
@@ -24,11 +28,18 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+
+    implementation("org.springframework.cloud:spring-cloud-starter-feign:1.4.7.RELEASE")
+    implementation("org.springframework.cloud:spring-cloud-starter-openfeign:3.0.4")
+    implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:3.0.4")
+
+
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     implementation(project(":xdata-contract"))
     implementation(project(":json-contract"))
     implementation("com.alibaba:fastjson:1.2.73")
     implementation("top.xcore","xdata-core","1.0.1")
+    ext.set("useSourceCode", true)
     if(ext.has("useSourceCode")) {
         implementation(project(":springboot-adapter"))
     } else {

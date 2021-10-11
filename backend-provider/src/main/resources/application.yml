@@ -1,0 +1,26 @@
+server:
+  port: 8080
+
+#配置eureka
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8082/eureka
+  instance:
+    status-page-url-path: /info
+    health-check-url-path: /health
+
+#服务名称
+spring:
+  application:
+    name: producer
+  profiles:
+    active: ${boot.profile:dev}
+#feign的配置，连接超时及读取超时配置
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: basic

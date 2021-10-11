@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "top.xcore"
-version = "0.0.1"
+version = "0.0.2"
 java.sourceCompatibility = JavaVersion.VERSION_16
 
 repositories {
@@ -29,6 +29,10 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+    implementation("org.springframework.cloud:spring-cloud-starter-feign:1.4.7.RELEASE")
+    implementation("org.springframework.cloud:spring-cloud-starter-openfeign:3.0.4")
+
     api("top.xcore","xdata-core","1.0.1")
 }
 

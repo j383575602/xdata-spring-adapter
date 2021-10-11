@@ -14,9 +14,11 @@ import top.xcore.xdata.XDataWriter;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
+
 /**
  * A converter use to convert xdata to wrapper
  */
+
 public class XDataConverter extends AbstractHttpMessageConverter<XData> {
     /**
      * Constructor
@@ -53,6 +55,7 @@ public class XDataConverter extends AbstractHttpMessageConverter<XData> {
 
     @Override
     protected void writeInternal(XData xData, HttpOutputMessage outputMessage) throws IOException, HttpMessageNotWritableException {
+        System.out.println("writeInternal....");
         XDataWriter writer = new XDataWriter();
         LinkedBuffer buffer = writer.writeDataToBuffer(xData);
         buffer.writeToStream(outputMessage.getBody());

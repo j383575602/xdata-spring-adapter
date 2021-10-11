@@ -9,7 +9,6 @@ import com.test.api.TTUserListRequest
 import com.test.api.TTUserListRequestWrapper
 import com.test.api.TTUserListResponse
 import com.test.api.TTUserListResponseWrapper
-import com.test.model.TTRequestHeaderWrapper
 import com.test.model.TTResponseHeader
 import com.test.model.TTResponseHeaderWrapper
 import org.slf4j.LoggerFactory
@@ -22,7 +21,7 @@ fun <T> Any.addTo(list:ArrayList<T>) {
 }
 
 @RestController
-class DemoController {
+class ProviderController {
     @GetMapping("/api1")
     fun api1(@RequestParam name: String?): String? {
         return name;
@@ -30,7 +29,7 @@ class DemoController {
 
     @PostMapping("/xservice", produces = ["application/xdata"])
     fun api3(@RequestBody request: TTUserListRequestWrapper): TTUserListResponseWrapper {
-        var logger = LoggerFactory.getLogger(DemoController::class.qualifiedName);
+        var logger = LoggerFactory.getLogger(ProviderController::class.qualifiedName);
         logger.info("requestId:${request.header.requestId}")
         logger.info("requestId:${request.header.sessionId}")
         logger.info("requestId:${request.header.token}");
@@ -43,7 +42,7 @@ class DemoController {
 
     @PostMapping("/json", produces = ["application/json"])
     fun api4(@RequestBody request: TTUserListRequest): TTUserListResponse {
-        var logger = LoggerFactory.getLogger(DemoController::class.qualifiedName);
+        var logger = LoggerFactory.getLogger(ProviderController::class.qualifiedName);
         logger.info("requestId:${request.header.requestId}")
         logger.info("requestId:${request.header.sessionId}")
         logger.info("requestId:${request.header.token}");
