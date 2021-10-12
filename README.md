@@ -5,29 +5,31 @@
 ## 1.1 dependency declaration:
 
         implementation("top.xcore:xdata-core:1.0.1")
-        implementation("top.xcore:springboot.adapter:0.0.1")
+        implementation("top.xcore:springboot.adapter:0.0.2")
 
-## 1.2 you should add Configuration for SpringBoot
+## 1.2 you should scan the configurations declared in the sdk in Application like:
 
-    @Configuration
-    class XDataConfiguration : WebMvcConfigurer {
-        override fun extendMessageConverters(converters: MutableList<HttpMessageConverter<*>>) {
-        super.extendMessageConverters(converters)
-        println("========extendMessageConverters is ccreateed");
-        converters.add(XDataConverter());
-        }
-    }
+    @ComponentScan(value=["top.xcore.springboot.adapter","your.xxx.package"])
+    class ConsumerApplication
 
 ## 1.3  declare a controller like:
 
 
     @PostMapping("/xservice", produces = ["application/xdata"])
-    fun api(@RequestBody request: TTUserListRequestWrapper): TTUserListResponseWrapper {
+    fun userListApi(@RequestBody request: TTUserListRequestWrapper): TTUserListResponseWrapper {
         return handleRequest(request);
     }
 
     private fun handleRequest(request:TTUserListRequestWrapper):TTUserListResponseWrapper {
         // handle the business and return an object of TTUserListResponseWrapper
+    }
+
+## 1.4 Config feign client like:
+
+    @FeignClient(name = "producer")
+    interface UserService {
+        @RequestMapping(path = ["/xservice"],name = "POST",consumes = ["application/xdata"])
+        fun requestUserList(@RequestBody request: TTUserListRequestWrapper):TTUserListResponseWrapper
     }
 
 # 2  Run Test and See Performance Compared with fastjson
@@ -39,7 +41,7 @@
 ## 2.2 Run Test
 DemoApplicationTests.test3 is a test that will call the two services above , in this test, we use xdata and fastjson to send same business data, to compare the traffic data and time consumption
 
-##2.3 Performance Compare
+## 2.3 Performance Compare
 
 |method|traffic data(byte) |  time(ms) |
   |-----|-----|---------| 
