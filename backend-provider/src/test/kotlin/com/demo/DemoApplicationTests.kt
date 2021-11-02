@@ -17,10 +17,14 @@ import top.xcore.xdata.XDataParser
 import top.xcore.xdata.XDataWriter
 import java.net.HttpURLConnection
 import java.net.URL
+import kotlin.math.abs
+import kotlin.random.Random
 
 @SpringBootTest(classes =[ProviderApplication::class])
 class DemoApplicationTests {
-
+	val benckmark = 2;
+	val random = Random(System.currentTimeMillis());
+	val seed = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYA1234567890";
 	@Test
 	fun contextLoads() {
 
@@ -38,24 +42,36 @@ class DemoApplicationTests {
 
 	@Test
 	fun test3() {
-		doWithFastJson();
 		doWithXData();
+		doWithFastJson();
+	}
+
+	fun readomstring(len:Int):String {
+		var sb = StringBuilder();
+		for (i in 0..len) {
+			var index = abs(random.nextInt()) % 62;
+			var ch = seed[index];
+			sb.append(ch)
+		}
+		return sb.toString();
 	}
 
 	fun doWithXData() {
 		var t0 = System.currentTimeMillis();
-		var request = TTUserListRequestWrapper().apply {
-			header = TTRequestHeaderWrapper().apply {
-				requestId = "fdsafsdafdsfdsfiewrsv123334";
-				sessionId = "09fdsafewjlkilfjdfajjsafdsf";
-				token = "099ofdsafsdafdsafdsf";
+		for(i in 0..benckmark) {
+			var request = TTUserListRequestWrapper().apply {
+				header = TTRequestHeaderWrapper().apply {
+					requestId = readomstring(20);
+					sessionId = readomstring(20);
+					token = readomstring(10);
+				}
+				startIndex = 101;
+				count = 10000;
 			}
-			startIndex = 101;
-			count = 100;
-		}
 
-		var response = sendUserListRequestXData(request);
-		printResponseWrapper(response);
+			var response = sendUserListRequestXData(request);
+			//printResponseWrapper(response);
+		}
 		var t1 = System.currentTimeMillis();
 		println("xdata total Time:${t1-t0}")
 	}
@@ -63,18 +79,20 @@ class DemoApplicationTests {
 
 	fun doWithFastJson() {
 		var t0 = System.currentTimeMillis();
-		var request = TTUserListRequest().apply {
-			header = TTRequestHeader().apply {
-				requestId = "fdsafsdafdsfdsfiewrsv123334";
-				sessionId = "09fdsafewjlkilfjdfajjsafdsf";
-				token = "099ofdsafsdafdsafdsf";
+		for(i in 0..benckmark) {
+			var request = TTUserListRequest().apply {
+				header = TTRequestHeader().apply {
+					requestId = readomstring(20);
+					sessionId = readomstring(20);
+					token = readomstring(10);
+				}
+				startIndex = 101;
+				count = 10000;
 			}
-			startIndex = 101;
-			count = 100;
-		}
 
-		var response = sendUserListRequestJSON(request);
-		printResponse(response);
+			var response = sendUserListRequestJSON(request);
+			//printResponse(response);
+		}
 		var t1 = System.currentTimeMillis();
 		println("fastjson total Time:${t1-t0}")
 
@@ -124,7 +142,7 @@ class DemoApplicationTests {
 		var bytes = XDataWriter().writeData(request);
 		urlConnection.outputStream.write(bytes)
 		var byteout = urlConnection.inputStream.readBytes();
-		println("bytesout.size:${byteout.size},${String(byteout)}")
+		printValue("xdata bytesout.size:${byteout.size}")
 		var outb = XDataParser().parse(byteout);
 		var response = TTUserListResponseWrapper(outb);
 		return response;
@@ -140,12 +158,18 @@ class DemoApplicationTests {
 		var json = JSON.toJSONBytes(request);
 		urlConnection.outputStream.write(json)
 		var byteout = urlConnection.inputStream.readBytes();
-		println("bytesout.size:${byteout.size},${String(byteout)}")
+		printValue("json bytesout.size:${byteout.size}")
+		var t1 = System.currentTimeMillis();
 		var response =JSON.parseObject(String(byteout),TTUserListResponse::class.java)
+		var t2 = System.currentTimeMillis();
+		printValue("json read parsetime:${t2-t1}")
 		return response;
 	}
 
 	fun logValue(msg:Any) {
 		//println(msg);
+	}
+	fun printValue(msg:Any) {
+		println(msg);
 	}
 }

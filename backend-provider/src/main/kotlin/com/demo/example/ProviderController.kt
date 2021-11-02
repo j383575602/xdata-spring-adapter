@@ -30,27 +30,34 @@ class ProviderController {
     @PostMapping("/xservice", produces = ["application/xdata"])
     fun api3(@RequestBody request: TTUserListRequestWrapper): TTUserListResponseWrapper {
         var logger = LoggerFactory.getLogger(ProviderController::class.qualifiedName);
-        logger.info("requestId:${request.header.requestId}")
-        logger.info("requestId:${request.header.sessionId}")
-        logger.info("requestId:${request.header.token}");
+        logger.info("xservice requestId:${request.header.requestId}")
+        logger.info("xservice requestId:${request.header.sessionId}")
+        logger.info("xservice requestId:${request.header.token}");
 
-        logger.info("startIndex:${request.startIndex}");
-        logger.info("count:${request.count}");
-        return handleUserLisRequestXData(request);
+        logger.info("xservice startIndex:${request.startIndex}");
+        logger.info("xservice count:${request.count}");
+        var t0 = System.currentTimeMillis();
+        var response =  handleUserLisRequestXData(request);
+        var t1 = System.currentTimeMillis();
+        println("xservice response time :${t1-t0}" )
+        return response;
 
     }
 
     @PostMapping("/json", produces = ["application/json"])
     fun api4(@RequestBody request: TTUserListRequest): TTUserListResponse {
         var logger = LoggerFactory.getLogger(ProviderController::class.qualifiedName);
-        logger.info("requestId:${request.header.requestId}")
-        logger.info("requestId:${request.header.sessionId}")
-        logger.info("requestId:${request.header.token}");
+        logger.info("json requestId:${request.header.requestId}")
+        logger.info("json requestId:${request.header.sessionId}")
+        logger.info("json requestId:${request.header.token}");
 
-        logger.info("startIndex:${request.startIndex}");
-        logger.info("count:${request.count}");
-        return handleUserLisRequestJSON(request);
-
+        logger.info("json startIndex:${request.startIndex}");
+        logger.info("json count:${request.count}");
+        var t0 = System.currentTimeMillis();
+        var response =  handleUserLisRequestJSON(request);
+        var t1 = System.currentTimeMillis();
+        println("json response time :${t1-t0}" )
+        return response;
     }
 
     private fun handleUserLisRequestJSON(request: TTUserListRequest): TTUserListResponse {

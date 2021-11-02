@@ -33,7 +33,7 @@ dependencies {
     implementation(project(":xdata-contract"))
     implementation(project(":json-contract"))
     implementation("com.alibaba:fastjson:1.2.73")
-    implementation("top.xcore","xdata-core","1.0.1")
+    implementation("top.xcore","xdata-core","1.0.2")
     ext.set("useSourceCode",true)
     if(ext.has("useSourceCode")) {
         implementation(project(":springboot-adapter"))

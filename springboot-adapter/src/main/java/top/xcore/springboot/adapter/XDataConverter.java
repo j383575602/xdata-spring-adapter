@@ -35,6 +35,7 @@ public class XDataConverter extends AbstractHttpMessageConverter<XData> {
     @Override
     protected XData readInternal(Class<? extends XData> clazz, HttpInputMessage inputMessage) throws IOException, HttpMessageNotReadableException {
         XDataParser parser = new XDataParser();
+        parser.setDebug(false);
         XData xdata =  parser.parse(inputMessage.getBody().readAllBytes());
         if (clazz == XData.class) {
             return xdata;
@@ -57,6 +58,7 @@ public class XDataConverter extends AbstractHttpMessageConverter<XData> {
     protected void writeInternal(XData xData, HttpOutputMessage outputMessage) throws IOException, HttpMessageNotWritableException {
         System.out.println("writeInternal....");
         XDataWriter writer = new XDataWriter();
+        writer.setDebug(false);
         LinkedBuffer buffer = writer.writeDataToBuffer(xData);
         buffer.writeToStream(outputMessage.getBody());
     }

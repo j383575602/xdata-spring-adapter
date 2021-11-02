@@ -33,7 +33,7 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-feign:1.4.7.RELEASE")
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign:3.0.4")
 
-    api("top.xcore","xdata-core","1.0.1")
+    api("top.xcore","xdata-core","1.0.2")
 }
 
 tasks.withType<KotlinCompile> {
